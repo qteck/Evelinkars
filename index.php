@@ -1,6 +1,6 @@
 <?php
-require_once __DIR__ . '/vendor/tracy/tracy/src/tracy.php';
-require_once __DIR__ . '/model/pageMannager.php';
+require_once __DIR__ . '/vendor/autoload.php';
+require_once __DIR__ . '/model/pageManager.php';
 
 use Tracy\Debugger;
 
@@ -9,7 +9,7 @@ session_start();
 Debugger::enable(Debugger::DEVELOPMENT);
 
 
-$pages = new Model\PageMannager();
+$pages = new Model\PageManager();
 $pages->modelIncluder();
             
 ?>

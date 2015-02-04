@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . "/../vendor/facebook/php-sdk-v4/autoload.php";
+//require_once __DIR__ . "/../vendor/facebook/php-sdk-v4/autoload.php";
 
 use Facebook\FacebookSession;
 use Facebook\FacebookRequest;

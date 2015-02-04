@@ -1,7 +1,7 @@
 <?php
 namespace Model;
 
-class PageMannager 
+class PageManager 
 {
     public $page;
     public $files;
