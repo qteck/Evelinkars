@@ -1,7 +1,5 @@
 <?php
 
-//require_once __DIR__ . "/../vendor/facebook/php-sdk-v4/autoload.php";
-
 use Facebook\FacebookSession;
 use Facebook\FacebookRequest;
 use Facebook\GraphUser;
@@ -30,35 +28,43 @@ class FacebookLogIn
     
     function getSessionAndToken()
     {
-        try {
+        try{
             $session = $this->helper->getSessionFromRedirect();
-        } catch(FacebookRequestException $ex) {
-            echo "some facebook issues";
-        } catch(\Exception $ex) {
-            echo "problem s validací";
-        } 
+        }catch(Exception $e){
+	
+        }
+
+        if(isset($_SESSION['token'])){
+	$session = new FacebookSession($_SESSION['token']);
+	
+	try{
+		$session->Validate($this->id, $this->secret);
+	}catch(FacebookAuthorizationException $e){
+		$session = '';
+	}
+}
 
         if (isset($session)) {
+            
+            \Tracy\Debugger::dump($session);
             $_SESSION['token'] = $session->getToken();
+            echo ".................";
+            \Tracy\Debugger::dump($_SESSION['token']);
             
-            
- $request2 = new FacebookRequest(
-  $session,
-  'GET',
-  '/me/picture',
-  array (
-    'redirect' => false,
-    'height' => '200',
-    'type' => 'normal',
-    'width' => '200',
-  )
-);
-    $response2 = $request2->execute();
-    $graphObject2 = $response2->getGraphObject();
+        $request2 = new FacebookRequest($session, 'GET', '/me/picture', array (
+            'redirect' => false,
+            'height' => '200',
+            'type' => 'normal',
+            'width' => '200'
+        ));
+        
+        $response2 = $request2->execute();
+        $graphObject2 = $response2->getGraphObject();
     
-    var_dump($graphObject2);
+        \Tracy\Debugger::dump($graphObject2);
     
-    echo "<img src='". $graphObject2->getProperty('url') ."' alt='profile picture'>";   
+        echo "<img src='". $graphObject2->getProperty('url') ."' alt='profile picture'>";
+        
         } else {
             echo "<a href=". $this->helper->getLoginUrl(array('publish_actions')) .">log in with facebook</a>";
         }
@@ -80,52 +86,10 @@ class FacebookLogIn
     }
        
 
-        $fbLogin = new FacebookLogIn();
+    $fbLogin = new FacebookLogIn();
       
 
     
     
 
 
-echo "dddd";
-
-
-/*...
- *     $request = new FacebookRequest($session, 'GET','/me');
-    $response = $request->execute();
-    $graphObject = $response->getGraphObject();
-    
-    
-    Debugger::dump($graphObject);
-    echo "logged in as: ". $graphObject->getProperty('first_name') .
-                        " ". $graphObject->getProperty('last_name').
-                                ' ('. $graphObject->getProperty('id').')';
-    
-   
-    
-    $request2 = new FacebookRequest(
-  $session,
-  'GET',
-  '/me/picture',
-  array (
-    'redirect' => false,
-    'height' => '200',
-    'type' => 'normal',
-    'width' => '200',
-  )
-);
-    $response2 = $request2->execute();
-    $graphObject2 = $response2->getGraphObject();
-    
-    Debugger::dump($graphObject2);
-    
-    echo "<img src='". $graphObject2->getProperty('url') ."' alt='profile picture'>";
-    
-    
-    $request3 = new FacebookRequest($session, 'GET','/me/permissions');
-    $response3 = $request3->execute();
-    $graphObject3 = $response3->getGraphObject();
-    
-    
-    Debugger::dump($graphObject3);
- */
