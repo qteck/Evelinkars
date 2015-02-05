@@ -1,5 +1,5 @@
 <?php
-
+/*
 use Facebook\FacebookSession;
 use Facebook\FacebookRequest;
 use Facebook\GraphUser;
@@ -8,11 +8,13 @@ use Facebook\FacebookRequestException;
 class FacebookLogIn
 {
 
-    protected $id = '293012790816861';
-    protected $secret = '4ebf273b5eb77e5d7ca7f1e14f0bec67';
+    private $id = '293012790816861';
+    private $secret = '4ebf273b5eb77e5d7ca7f1e14f0bec67';
+    
     protected $permissions = array();
-  
-    public $helper;
+    protected $helper;
+    protected $session;
+    
     
     function __construct()
     {
@@ -23,73 +25,91 @@ class FacebookLogIn
         
         $this->helper = new Facebook\FacebookRedirectLoginHelper('http://' . $server_filter . '/index.php?page=login.php');
 
-        $this->getSessionAndToken();
+        $this->getSessionAndKeepItAlive();
     }
     
-    function getSessionAndToken()
+    function getSessionAndKeepItAlive()
     {
-        try{
-            $session = $this->helper->getSessionFromRedirect();
-        }catch(Exception $e){
+        try {
+            $this->session = $this->helper->getSessionFromRedirect();
+        } catch(Exception $e) {
 	
         }
-
-        if(isset($_SESSION['token'])){
-	$session = new FacebookSession($_SESSION['token']);
+/*
+        if(isset($_SESSION['token']))
+        {
+            $this->session = new FacebookSession($_SESSION['token']);
 	
-	try{
-		$session->Validate($this->id, $this->secret);
-	}catch(FacebookAuthorizationException $e){
-		$session = '';
-	}
-}
+            try {
+               $this->session->Validate($this->id, $this->secret);
+            } catch (FacebookAuthorizationException $e) {
+                $this->session = '';
+            }
+        }*/
 
-        if (isset($session)) {
+      /*  if (isset($this->session)) {
             
-            \Tracy\Debugger::dump($session);
-            $_SESSION['token'] = $session->getToken();
+            \Tracy\Debugger::dump($this->session);
+            $_SESSION['token'] = $this->session->getToken();
             echo ".................";
             \Tracy\Debugger::dump($_SESSION['token']);
-            
-        $request2 = new FacebookRequest($session, 'GET', '/me/picture', array (
+            $this->getProfilePicture();
+            $this->getPersonalInfo();
+        } 
+    }
+    
+    function getProfilePicture()
+    {
+        $request = new FacebookRequest($this->session, 'GET', '/me/picture', array (
             'redirect' => false,
             'height' => '200',
             'type' => 'normal',
             'width' => '200'
         ));
         
-        $response2 = $request2->execute();
-        $graphObject2 = $response2->getGraphObject();
+        $response = $request->execute();
+        $graphObject = $response->getGraphObject();
     
-        \Tracy\Debugger::dump($graphObject2);
-    
-        echo "<img src='". $graphObject2->getProperty('url') ."' alt='profile picture'>";
+        echo "<img src='". $graphObject->getProperty('url') ."' alt='profile picture'>";        
+    }
+
+    function getPersonalInfo() 
+    {
+        $request = new FacebookRequest($this->session, 'GET', '/me');
         
-        } else {
-            echo "<a href=". $this->helper->getLoginUrl(array('publish_actions')) .">log in with facebook</a>";
+        $response = $request->execute();
+        $graphObject = $response->getGraphObject();
+        
+        Tracy\Debugger::dump($graphObject);
+    }
+        
+    function provideLogInLink()
+    {      echo "brr";
+        if(!isset($this->session))
+        {
+            echo 'huhlal';
+            Tracy\Debugger::dump($this->session);
+            
+            $link = $this->helper->getLoginUrl();
+        } else { 
+            $link = ''; echo 'okay';
         }
-    }
-
-        
-     function provideLogInLink()
-     {      
-         if(isset($_SESSION['token']))
-             {
-               $link = $this->helper->getLoginUrl($this->permissions);
-             } else 
-                 { 
-                    $link = null; 
-                 }
              
-             return $link;          
-     }
+        return $link;          
     }
+}*/
        
-
+   $hovno = "ukaž mi to hovno v templates";/*
     $fbLogin = new FacebookLogIn();
+    $hoho = $fbLogin->provideLogInLink();
       
-
+      if(empty($hoho))
+      {
+    echo "<a href=\"".$hoho."\">log out</a>";
+      }else{
+        echo "<a href=\"".$hoho."\">log in</a>";  
+      }
     
-    
+    */
 
 
