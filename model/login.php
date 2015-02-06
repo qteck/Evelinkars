@@ -98,7 +98,7 @@ class FacebookLogIn
         return $link;          
     }
 }*/
-       
+       echo "model";
    $hovno = "ukaž mi to hovno v templates";/*
     $fbLogin = new FacebookLogIn();
     $hoho = $fbLogin->provideLogInLink();

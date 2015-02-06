@@ -32,10 +32,17 @@ class PageManager
         }
     }
     
+    /*
     function modelIncluder()
     {
         $dir = __DIR__ . '/../model/';
         $this->checkDirectories($dir);
+    }*/
+    
+    function modelIncluder()
+    {
+            include "model/login.php";
+            include "templates/login.php";
     }
             
     function templateIncluder()

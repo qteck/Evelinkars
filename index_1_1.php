@@ -1,3 +1,0 @@
-<?php
-
-$hola = "it works";
