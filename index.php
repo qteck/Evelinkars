@@ -10,7 +10,8 @@ Debugger::enable(Debugger::DEVELOPMENT);
 
 
 $pages = new Model\PageManager();
-$pages->modelIncluder();
+
+include $pages->checkDirectories('model/');
             
 ?>
 <!DOCTYPE html>
@@ -52,7 +53,7 @@ and open the template in the editor.
         
         <div id="article">
             <?php
-                $pages->templateIncluder();
+                include $pages->checkDirectories('templates/');
             ?>
         </div>
     </body>

@@ -25,29 +25,12 @@ class PageManager
                     
         if($this->files && in_array($this->page, $this->files)) 
         {               
-            include $dir . $this->page;
+            $path = $dir . $this->page;
                         
         } else {
-            include $dir . "default.php";
+            $path = $dir . "default.php";
         }
-    }
-    
-    /*
-    function modelIncluder()
-    {
-        $dir = __DIR__ . '/../model/';
-        $this->checkDirectories($dir);
-    }*/
-    
-    function modelIncluder()
-    {
-            include "model/login.php";
-            include "templates/login.php";
-    }
-            
-    function templateIncluder()
-    {
-        $dir = __DIR__ . '/../templates/';
-        $this->checkDirectories($dir);
+        
+        return $path;
     }
 }

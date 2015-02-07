@@ -9,13 +9,13 @@
         <span>(UK, Bournemouth, 03.01.2015)</span>
     </div>
     <div style="text-align: right;">
-        <span><a href="" onclick="return false" id="comment1">Write a comment!</a></span>
+        <span><a href="" onclick="return false" id="comment1">Sign in and write a comment!</a></span>
     </div>
 </div>
 
 <form id="comment_form1" style="padding: 20px">
-    <img src="images/evelinka.jpg" style="float: right;width: 100px;height: 100px;" alt="logo">
-    Hello mr/miss Bla Bla, don't be shy, share your impressions!<br>
+    <img src="<?php echo $_SESSION['fb']['url']; ?>" style="float: right;width: 100px;height: 100px;" alt="logo">
+    Hello <?php echo ($_SESSION['fb']['gender'] == 'female'?'Miss':'Mr.') ?> <?php echo $_SESSION['fb']['name']; ?> , don't be shy, share your impressions!<br>
     <textarea cols="64" rows="7"></textarea></br>
     <input type="submit" value="Post">
 </form>

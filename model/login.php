@@ -1,5 +1,5 @@
 <?php
-/*
+
 use Facebook\FacebookSession;
 use Facebook\FacebookRequest;
 use Facebook\GraphUser;
@@ -47,49 +47,51 @@ class FacebookLogIn
             }
         }*/
 
-      /*  if (isset($this->session)) {
+        if (isset($this->session)) {
             
             \Tracy\Debugger::dump($this->session);
             $_SESSION['token'] = $this->session->getToken();
             echo ".................";
             \Tracy\Debugger::dump($_SESSION['token']);
-            $this->getProfilePicture();
-            $this->getPersonalInfo();
-        } 
-    }
-    
-    function getProfilePicture()
-    {
-        $request = new FacebookRequest($this->session, 'GET', '/me/picture', array (
+     
+        $this->getFacebookExecution(array('url'), 'GET', '/me/picture', array (
             'redirect' => false,
             'height' => '200',
             'type' => 'normal',
             'width' => '200'
         ));
+            
+            echo "personal info:";
         
-        $response = $request->execute();
-        $graphObject = $response->getGraphObject();
-    
-        echo "<img src='". $graphObject->getProperty('url') ."' alt='profile picture'>";        
+        $this->getFacebookExecution(array('id','first_name','last_name','name','gender','link'), 'GET', '/me');
+        
+        } 
     }
-
-    function getPersonalInfo() 
+    
+    function getFacebookExecution($selectedFbArrays, $method, $request1, $arrayParam = '')
     {
-        $request = new FacebookRequest($this->session, 'GET', '/me');
+        $request = new FacebookRequest($this->session, $method, $request1, $arrayParam); 
         
         $response = $request->execute();
         $graphObject = $response->getGraphObject();
         
-        Tracy\Debugger::dump($graphObject);
+        foreach($selectedFbArrays as $val)
+        {
+            $_SESSION['fb'][$val] = $graphObject->getProperty($val);
+        }
+        
+        Tracy\Debugger::dump($_SESSION['fb']);
+    }
+    
+    function logOff() {
+        $_SESSION['fb'];
+        
     }
         
     function provideLogInLink()
-    {      echo "brr";
+    {      
         if(!isset($this->session))
-        {
-            echo 'huhlal';
-            Tracy\Debugger::dump($this->session);
-            
+        {            
             $link = $this->helper->getLoginUrl();
         } else { 
             $link = ''; echo 'okay';
@@ -97,19 +99,6 @@ class FacebookLogIn
              
         return $link;          
     }
-}*/
-       echo "model";
-   $hovno = "ukaž mi to hovno v templates";/*
-    $fbLogin = new FacebookLogIn();
-    $hoho = $fbLogin->provideLogInLink();
-      
-      if(empty($hoho))
-      {
-    echo "<a href=\"".$hoho."\">log out</a>";
-      }else{
-        echo "<a href=\"".$hoho."\">log in</a>";  
-      }
-    
-    */
+}
 
 
