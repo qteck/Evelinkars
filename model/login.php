@@ -24,8 +24,17 @@ class FacebookLogIn
                                                $this->secret);
         
         $this->helper = new Facebook\FacebookRedirectLoginHelper('http://' . $server_filter . '/index.php?page=login.php');
-
+        
+        $get = (isset($_GET['logoff'])?1:'');
+        
+        if($get == '1')
+        {           
+            $this->logOff();
+            header( "refresh:5;url=/index.php" ); 
+        }
+        
         $this->getSessionAndKeepItAlive();
+        
     }
     
     function getSessionAndKeepItAlive()
@@ -35,35 +44,31 @@ class FacebookLogIn
         } catch(Exception $e) {
 	
         }
-/*
-        if(isset($_SESSION['token']))
+
+        if(isset($_SESSION['fb']['token']))
         {
-            $this->session = new FacebookSession($_SESSION['token']);
+            $this->session = new FacebookSession($_SESSION['fb']['token']);
 	
             try {
                $this->session->Validate($this->id, $this->secret);
             } catch (FacebookAuthorizationException $e) {
                 $this->session = '';
             }
-        }*/
+        }
 
         if (isset($this->session)) {
             
-            \Tracy\Debugger::dump($this->session);
-            $_SESSION['token'] = $this->session->getToken();
-            echo ".................";
-            \Tracy\Debugger::dump($_SESSION['token']);
+            $_SESSION['fb']['token'] = $this->session->getToken();
+
      
-        $this->getFacebookExecution(array('url'), 'GET', '/me/picture', array (
-            'redirect' => false,
-            'height' => '200',
-            'type' => 'normal',
-            'width' => '200'
-        ));
-            
-            echo "personal info:";
+            $this->getFacebookExecution(array('url'), 'GET', '/me/picture', array (
+              'redirect' => false,
+                'height' => '200',
+                'type' => 'normal',
+                'width' => '200'
+            ));
         
-        $this->getFacebookExecution(array('id','first_name','last_name','name','gender','link'), 'GET', '/me');
+            $this->getFacebookExecution(array('id','first_name','last_name','name','gender','link'), 'GET', '/me');
         
         } 
     }
@@ -79,13 +84,11 @@ class FacebookLogIn
         {
             $_SESSION['fb'][$val] = $graphObject->getProperty($val);
         }
-        
-        Tracy\Debugger::dump($_SESSION['fb']);
     }
     
-    function logOff() {
-        $_SESSION['fb'];
-        
+    function logOff() 
+    {
+        $_SESSION['fb'] = '';
     }
         
     function provideLogInLink()
@@ -102,3 +105,11 @@ class FacebookLogIn
 }
 
 
+$facebookLogIn = new FacebookLogIn();
+
+
+if($_SESSION['fb']['token'])
+{  
+    header('Location: /index.php');
+    exit;
+}

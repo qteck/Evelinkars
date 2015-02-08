@@ -35,19 +35,34 @@ and open the template in the editor.
     </style>    
     <body>
         
-        <div style="text-align: center;margin: 40px 0;">
-            <div style="float: left;">
+        <div style="text-align: center;margin: 40px 0;height: 100px;">
+            <div style="float: left;width: 20%;">
                 <a href="index.php"><img src="images/evelinka.jpg" style="width: 100px;height: 100px;" alt="logo"></a>
             </div>
             
-            <div style="">
+            <div style="width: 60%;float: left;">
                 <p>
                 How I met the most beautiful girl in the world <br>
                 and <br>
                 she got me! <br>
                 </p>
             
-                <p style=""><a href="index.php?page=login.php">Facebook login</a></p>
+                <p style="">
+                    <?php if (!$_SESSION['fb']['token']) { ?>
+                        <a href="index.php?page=login.php">Facebook login</a>
+                    <?php } else { ?>
+                        You're logged in as <?php echo $_SESSION['fb']['name']; ?>,
+                        <a href="index.php?page=login.php&logoff=1">log off</a>
+                    <?php }?>
+                    
+                </p>
+            </div>
+            <div style="">
+                <p>
+                <?php if ($_SESSION['fb']['token']) { ?>
+                <a href="index.php"><img src="<?php echo $_SESSION['fb']['url']?>" style="width: 100px;height: 100px;" alt="logo"></a>
+                <?php } ?>
+                </p>
             </div>
         </div>
         
