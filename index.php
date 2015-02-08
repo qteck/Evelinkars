@@ -29,11 +29,25 @@ and open the template in the editor.
     </head>
     <style>
 
-        body{font-size: 15px;font-family: times new roman;width: 720px;margin: auto;}
+        body{width: 720px;margin: auto;font-family: "Times New Roman", Times, serif;font-size: 16px;}
         #article{}
-        span{font-size: 10px;}
+        span{font-size: 12px;}
     </style>    
     <body>
+        <script type="text/javascript">
+        // Get rid of the Facebook residue hash in the URI
+        // Must be done in JS cuz hash only exists client-side
+        // IE and Chrome version of the hack
+        if (String(window.location.hash).substring(0,1) == "#") {
+                window.location.hash = "";
+                window.location.href=window.location.href.slice(0, -1);
+                }
+        // Firefox version of the hack
+        if (String(location.hash).substring(0,1) == "#") {
+                location.hash = "";
+                location.href=location.href.substring(0,location.href.length-3);
+                }
+        </script>
         
         <div style="text-align: center;margin: 40px 0;height: 100px;">
             <div style="float: left;width: 20%;">
