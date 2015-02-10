@@ -1,6 +1,6 @@
 <?php
     $fbLoglink = $facebookLogIn->provideLogInLink();
-    
+
     $get = (isset($_GET['logoff'])?1:'');
 ?>
 
@@ -8,7 +8,7 @@
 
 <?php if($get == 1) { ?>
     <p>
-        You'll be redirected in about 5 secs.
+        You'll be redirected about 5 secs.
     </p>
 <?php } ?>
 

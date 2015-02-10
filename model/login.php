@@ -108,7 +108,7 @@ class FacebookLogIn
 $facebookLogIn = new FacebookLogIn();
 
 
-if($_SESSION['fb']['token'])
+if(isset($_SESSION['fb']['token']))
 {  
     header('Location: /index.php');
     exit;

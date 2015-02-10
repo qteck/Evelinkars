@@ -29,7 +29,7 @@ and open the template in the editor.
     </head>
     <style>
 
-        body{width: 720px;margin: auto;font-family: "Times New Roman", Times, serif;font-size: 16px;}
+        body{width: 720px;margin: 40px auto;font-family: "Times New Roman", Times, serif;font-size: 16px;}
         #article{}
         span{font-size: 12px;}
     </style>    
@@ -56,16 +56,17 @@ and open the template in the editor.
             
             <div style="width: 60%;float: left;">
                 <p>
-                How I met the most beautiful girl in the world <br>
-                and <br>
-                she got me! <br>
+                    How I met the most beautiful girl in the world <br>
+                    and <br>
+                    she got me! <br>
                 </p>
             
                 <p style="">
-                    <?php if (!$_SESSION['fb']['token']) { ?>
+                    <?php if (!isset($_SESSION['fb']['token'])) { ?>
                         <a href="index.php?page=login.php">Facebook login</a>
                     <?php } else { ?>
                         You're logged in as <?php echo $_SESSION['fb']['name']; ?>,
+                        <a href="index.php?page=userAddArticle.php">add article</a>,
                         <a href="index.php?page=login.php&logoff=1">log off</a>
                     <?php }?>
                     
@@ -73,8 +74,8 @@ and open the template in the editor.
             </div>
             <div style="">
                 <p>
-                <?php if ($_SESSION['fb']['token']) { ?>
-                <a href="index.php"><img src="<?php echo $_SESSION['fb']['url']?>" style="width: 100px;height: 100px;" alt="logo"></a>
+                <?php if (isset($_SESSION['fb']['token'])) { ?>
+                    <a href="index.php"><img src="<?php echo $_SESSION['fb']['url']?>" style="width: 100px;height: 100px;" alt="logo"></a>
                 <?php } ?>
                 </p>
             </div>
