@@ -9,10 +9,11 @@ class AddArticle
         $this->db = $db;
     }
     
+    ///check the stmt return
     function insertArticle($arrays)
     {
         $sql = 'INSERT INTO articles (title, content, author, place, added) VALUES (:title, :content, :author, :place, NOW())';
-        $stmt = $this->db->insert($sql, $arrays);
+        $stmt = $this->db->boolQuery($sql, $arrays);
         
         return ($stmt?true:false);
     }
@@ -22,11 +23,17 @@ class AddArticle
 
 $addArticle = new AddArticle($db);
 
+if(!isset($_SESSION['fb']['token']))
+{  
+    header('Location: /index.php');
+    exit;
+}
+
 if(isset($_POST['postArticle'])) {
     
     $title = $_POST['title'];
     $content = $_POST['content'];
-    $author = $_SESSION['fb']['name'];
+    $author = $_SESSION['fb']['id'];
     $place = $_POST['place'];
     
     if(empty($title) OR empty($content) OR empty($place)) {
