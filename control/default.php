@@ -4,7 +4,7 @@
 class DB
 {
     protected $username = 'evelinkars';
-    protected $passwd   = 'B0rececek';
+    protected $passwd   = '';
     
     protected $dbName   = 'evelinkars';
     
