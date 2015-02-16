@@ -18,6 +18,8 @@ use Tracy,
  */
 class Debugger
 {
+	const VERSION = '2.3-dev';
+
 	/** server modes {@link Debugger::enable()} */
 	const DEVELOPMENT = FALSE,
 		PRODUCTION = TRUE,
@@ -25,8 +27,8 @@ class Debugger
 
 	const COOKIE_SECRET = 'tracy-debug';
 
-	/** @var string */
-	public static $version = '2.3-dev';
+	/** @deprecated */
+	public static $version = self::VERSION;
 
 	/** @var bool in production mode is suppressed any debugging output */
 	public static $productionMode = self::DETECT;
@@ -147,7 +149,6 @@ class Debugger
 				self::$logDirectory = NULL;
 				self::exceptionHandler(new \RuntimeException('Logging directory not found or is not absolute path.'));
 			}
-			ini_set('error_log', self::$logDirectory . '/php_error.log');
 		}
 
 		// php configuration
@@ -324,7 +325,7 @@ class Debugger
 		}
 
 		$message = 'PHP ' . Helpers::errorTypeToString($severity) . ": $message";
-		$count = & self::getBar()->getPanel(__CLASS__ . ':errors')->data["$file|$line|$message"];
+		$count = & self::getBar()->getPanel('Tracy:errors')->data["$file|$line|$message"];
 
 		if ($count++) { // repeated error
 			return NULL;
@@ -363,7 +364,7 @@ class Debugger
 			self::$blueScreen->info = array(
 				'PHP ' . PHP_VERSION,
 				isset($_SERVER['SERVER_SOFTWARE']) ? $_SERVER['SERVER_SOFTWARE'] : NULL,
-				'Tracy ' . self::$version,
+				'Tracy ' . self::VERSION,
 			);
 		}
 		return self::$blueScreen;
@@ -377,14 +378,8 @@ class Debugger
 	{
 		if (!self::$bar) {
 			self::$bar = new Bar;
-			self::$bar->addPanel(new DefaultBarPanel('time'));
-			self::$bar->addPanel(new DefaultBarPanel('memory'));
-			self::$bar->addPanel(new DefaultBarPanel('errors'), __CLASS__ . ':errors'); // filled by errorHandler()
-			self::$bar->info = array(
-				'PHP ' . PHP_VERSION,
-				isset($_SERVER['SERVER_SOFTWARE']) ? $_SERVER['SERVER_SOFTWARE'] : NULL,
-				'Tracy ' . self::$version,
-			);
+			self::$bar->addPanel(new DefaultBarPanel('info'), 'Tracy:info');
+			self::$bar->addPanel(new DefaultBarPanel('errors'), 'Tracy:errors'); // filled by errorHandler()
 		}
 		return self::$bar;
 	}

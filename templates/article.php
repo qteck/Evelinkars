@@ -1,15 +1,12 @@
-<?php 
+<?php
+$id = (!is_numeric($_GET['id'])?'1':$_GET['id']);
 
-    $bb = $homepage->getAllArticles();
-    
+$content = $article->getArticle(array(':id' => $id));
+
+$content = $content[0];
 ?>
 
-<?php foreach($bb as $content) { ?>
-    <h2>
-        <a href="index.php?page=article.php&id=<?php echo $content['id']; ?>&title=<?php echo \Model\makeNiceTitleInUrl($content['title']); ?>">
-            <?php echo $content['title']; ?>
-        </a>
-    </h2>
+<h1><?php echo $content['title']; ?></h1>
 
     <?php echo $content['content']; ?>
 
@@ -33,7 +30,6 @@
             </span>
         </div>
     </div>
-<?php } ?>
 
 <?php if (isset($_SESSION['fb']['token'])) { ?>            
     <form id="comment_form1" style="padding: 20px">

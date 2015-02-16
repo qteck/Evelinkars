@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "8ea7a6c4aea381e405ec511c3f419b4b",
+    "hash": "cc5a3dc5c1167e8ad0014821cf90254e",
     "packages": [
         {
             "name": "components/jquery",
@@ -50,35 +50,35 @@
         },
         {
             "name": "dg/adminer-custom",
-            "version": "v1.5.0",
+            "version": "v1.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dg/adminer-custom.git",
-                "reference": "9365952e11b2b706be94c5000bf032027557a45b"
+                "reference": "f1b449b7076d49711fdb41382e5bd858f09855d0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dg/adminer-custom/zipball/9365952e11b2b706be94c5000bf032027557a45b",
-                "reference": "9365952e11b2b706be94c5000bf032027557a45b",
+                "url": "https://api.github.com/repos/dg/adminer-custom/zipball/f1b449b7076d49711fdb41382e5bd858f09855d0",
+                "reference": "f1b449b7076d49711fdb41382e5bd858f09855d0",
                 "shasum": ""
             },
             "type": "project",
             "notification-url": "https://packagist.org/downloads/",
             "description": "Customization for the best database management tool written in PHP, Adminer",
-            "time": "2014-08-05 16:59:07"
+            "time": "2015-02-07 20:26:30"
         },
         {
             "name": "facebook/php-sdk-v4",
-            "version": "4.0.15",
+            "version": "4.0.16",
             "source": {
                 "type": "git",
                 "url": "https://github.com/facebook/facebook-php-sdk-v4.git",
-                "reference": "ebc82667ef953b98e2eca5dfb6784d6466a185cd"
+                "reference": "66da9e0e123b6440974bfe22210a8a053e9b5599"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/facebook/facebook-php-sdk-v4/zipball/ebc82667ef953b98e2eca5dfb6784d6466a185cd",
-                "reference": "ebc82667ef953b98e2eca5dfb6784d6466a185cd",
+                "url": "https://api.github.com/repos/facebook/facebook-php-sdk-v4/zipball/66da9e0e123b6440974bfe22210a8a053e9b5599",
+                "reference": "66da9e0e123b6440974bfe22210a8a053e9b5599",
                 "shasum": ""
             },
             "require": {
@@ -114,7 +114,7 @@
                 "facebook",
                 "sdk"
             ],
-            "time": "2015-01-06 21:29:27"
+            "time": "2015-02-03 19:20:31"
         },
         {
             "name": "tracy/tracy",
@@ -122,12 +122,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/nette/tracy.git",
-                "reference": "71f9545ede28b4e6a1ade8653598b0251d84ce39"
+                "reference": "0010aa94f683c1ae212b0d555dcbb4af92ef68e2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nette/tracy/zipball/71f9545ede28b4e6a1ade8653598b0251d84ce39",
-                "reference": "71f9545ede28b4e6a1ade8653598b0251d84ce39",
+                "url": "https://api.github.com/repos/nette/tracy/zipball/0010aa94f683c1ae212b0d555dcbb4af92ef68e2",
+                "reference": "0010aa94f683c1ae212b0d555dcbb4af92ef68e2",
                 "shasum": ""
             },
             "require": {
@@ -174,7 +174,7 @@
                 "debugger",
                 "nette"
             ],
-            "time": "2015-01-27 12:35:53"
+            "time": "2015-02-10 07:16:23"
         }
     ],
     "packages-dev": [],

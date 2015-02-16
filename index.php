@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/vendor/autoload.php';
+require_once __DIR__ . '/control/default.php';
 require_once __DIR__ . '/model/pageManager.php';
 
 use Tracy\Debugger;
@@ -8,11 +9,11 @@ session_start();
 
 Debugger::enable(Debugger::DEVELOPMENT);
 
-
+$db    = new DB;
 $pages = new Model\PageManager();
 
 include $pages->checkDirectories('model/');
-            
+
 ?>
 <!DOCTYPE html>
 <!--
@@ -65,7 +66,8 @@ and open the template in the editor.
                     <?php if (!isset($_SESSION['fb']['token'])) { ?>
                         <a href="index.php?page=login.php">Facebook login</a>
                     <?php } else { ?>
-                        You're logged in as <?php echo $_SESSION['fb']['name']; ?>,
+                        You're logged in as 
+                        <a href="index.php?page=userProfil.php"><?php echo $_SESSION['fb']['name']; ?></a>,
                         <a href="index.php?page=userAddArticle.php">add article</a>,
                         <a href="index.php?page=login.php&logoff=1">log off</a>
                     <?php }?>
