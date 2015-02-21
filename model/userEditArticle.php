@@ -29,9 +29,9 @@ class EditArticle
     
     public function previewArticle($where)
     {
-        $_SESSION['articleContent']['title'] = $_POST['title'];
-        $_SESSION['articleContent']['content'] = $_POST['content'];
-        $_SESSION['articleContent']['place'] = $_POST['place']; 
+        $_SESSION['editArticleContent']['title'] = $_POST['title'];
+        $_SESSION['editArticleContent']['content'] = $_POST['content'];
+        $_SESSION['editArticleContent']['place'] = $_POST['place']; 
         
         header("Location: ". $where);
     }
@@ -41,7 +41,7 @@ $editArticle = new EditArticle($db);
 
 if(isset($_GET['edit']) AND is_numeric($_GET['id']))
 {
-    if($_SESSION['articleContent']['id'] != $_GET['id'])
+    if($_SESSION['editArticleContent']['id'] != $_GET['id'])
     {
         $articleContent = $editArticle->getArticleById(array(':id' => $_GET['id'],
                                                          ':author' => $_SESSION['fb']['id']));
@@ -50,16 +50,14 @@ if(isset($_GET['edit']) AND is_numeric($_GET['id']))
             $notices[] = 'This article does not exist!';
         } else 
         {
-            $_SESSION['articleContent'] = $articleContent;
+            $_SESSION['editArticleContent'] = $articleContent;
         }
     }
-    
-        \Tracy\Debugger::dump($articleContent);
 }
 
 if(isset($_POST['previewArticle']))
 {
-    $editArticle->previewArticle('index.php?page=userPreviewArticle.php');
+    $editArticle->previewArticle('index.php?page=userEditPreviewArticle.php');
 }
 
 if(isset($_POST['postArticle']))
@@ -68,7 +66,7 @@ if(isset($_POST['postArticle']))
     $content = trim($_POST['content']);
     $author = $_SESSION['fb']['id'];
     $place = trim($_POST['place']);
-    $id = $_SESSION['articleContent']['id'];
+    $id = $_SESSION['editArticleContent']['id'];
     
     if(empty($title) OR empty($content) OR empty($place)) {
         $notices[] = 'All fields are supposed to be filled in.'; 
