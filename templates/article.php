@@ -3,7 +3,6 @@ $id = (!is_numeric($_GET['id'])?'1':$_GET['id']);
 
 $content = $article->getArticle(array(':id' => $id));
 
-$content = $content[0];
 ?>
 
 <h1><?php echo $content['title']; ?></h1>

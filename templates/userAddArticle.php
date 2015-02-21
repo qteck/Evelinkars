@@ -13,8 +13,10 @@
 </p>
 
 <form action="index.php?page=userAddArticle.php" method="post">
-    Title: <input type="text" name="title" style="width: 100%;"><br><br>
-    Article Content: <textarea name="content" style="width: 100%;height: 300px;"></textarea><br>
-    Place: <input type="text" name="place" style="width: 100%;"><br><br>
-    <input type="submit" name="previewArticle" value="Preview"> <input type="submit" name="postArticle" value="Post it!">
+    Title: <input type="text" name="title" value="<?php echo !isset($_SESSION['articleContent']['title'])?'': $_SESSION['articleContent']['title']; ?>" style="width: 100%;"><br><br>
+    Article Content: 
+    <textarea name="content" style="width: 100%;height: 300px;"><?php echo !isset($_SESSION['articleContent']['content'])?'': $_SESSION['articleContent']['content']; ?></textarea><br>
+    Place: <input type="text" name="place" value="<?php echo !isset($_SESSION['articleContent']['place'])?'': $_SESSION['articleContent']['place']; ?>" style="width: 100%;"><br><br>
+    <input type="submit" name="previewArticle" value="Preview">
+    <input type="submit" name="postArticle" value="Post it!">
 </form>

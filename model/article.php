@@ -12,7 +12,7 @@ class Article
     function getArticle($arrays)
     {
         $sql = 'SELECT * FROM articles WHERE id = :id';
-        $stmt = $this->db->query($sql, $arrays);
+        $stmt = $this->db->queryFetch($sql, $arrays);
         
         return $stmt;
         
