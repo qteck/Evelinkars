@@ -1,8 +1,9 @@
 <?php
-$id = (!is_numeric($_GET['id'])?'1':$_GET['id']);
-
 $content = $article->getArticle(array(':id' => $id));
 
+$comments = $article->getComments(array(':id' => $id));
+
+//sanitiye url in form tag / title
 ?>
 
 <h1><?php echo $content['title']; ?></h1>
@@ -31,11 +32,12 @@ $content = $article->getArticle(array(':id' => $id));
     </div>
 
 <?php if (isset($_SESSION['fb']['token'])) { ?>            
-    <form id="comment_form1" style="padding: 20px">
+<form action="index.php?page=article.php&id=<?php echo $id; ?>&name=<?php echo $content['title']; ?>" method="post" style="padding: 20px">
         <img src="<?php echo $_SESSION['fb']['url']; ?>" style="float: right;width: 100px;height: 100px;" alt="logo">
         Hello <?php echo ($_SESSION['fb']['gender'] == 'female'?'Miss':'Mr.') ?> <?php echo $_SESSION['fb']['name']; ?> , don't be shy, share your impressions!<br>
-        <textarea cols="64" rows="7"></textarea></br>
-        <input type="submit" value="Post">
+        <textarea name="comment_content" cols="64" rows="7"></textarea></br>
+        <input type='text' name="place"><br>
+        <input type="submit" name="comment" value="Post">
     </form>
 
     <script>
@@ -48,6 +50,20 @@ $content = $article->getArticle(array(':id' => $id));
     </script>
 <?php } ?>
 
-<h3>Comments (16)</h3>
-<p><img src="images/evelinka.jpg" style="float: left;width: 100px;height: 107px;margin-right: 10px;" alt="logo">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?</p>
-<span>(UK, Bournemouth, 03.01.2015 by miss <a href="">Bla Bla</a>)</span>
+<h3>Comments (<?php echo count($comments); ?>)</h3>
+<p>
+    <?php 
+        if (isset($notices)) { 
+            foreach($notices as $notice){ echo $notice; } 
+        } 
+    ?>
+</p>
+<?php foreach ($comments as $comment) { ?>
+    <p>
+        <img src="<?php echo $comment['img']; ?>" style="float: left;width: 100px;height: 107px;margin-right: 10px;" alt="logo">
+        <?php echo $comment['content']; ?>
+    </p>
+    <span>
+        (<?php echo $comment['place']; ?>, <?php echo $comment['added']; ?> by miss <a href=""><?php echo $comment['author']; ?></a>)
+    </span>
+<?php } ?>
