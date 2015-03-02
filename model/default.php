@@ -13,11 +13,19 @@ class HomePage
     
     function getAllArticles()
     {
-        $sql = 'SELECT * FROM articles ORDER BY id DESC';
+        $sql = 'SELECT *, articles.id AS articles_id FROM articles LEFT JOIN users ON articles.author = users.fb_id ORDER BY articles.id DESC';
         
         $q = $this->db->query($sql);
-        
+               
         return $q;
+    }
+    
+    function getComments($arrays)
+    {
+        $sql = 'SELECT * FROM comments LEFT JOIN users ON users.fb_id = comments.author WHERE comments.article_id = :id ORDER BY comments.id DESC';
+        $stmt = $this->db->query($sql, $arrays);
+        
+        return $stmt;
     }
 }
 

@@ -22,11 +22,13 @@ class AddArticle
        
     public function previewArticle($where)
     {
+        //better insert them trhough parameters 
+        // dont forget sanitize this sweet superglobals
         $_SESSION['addArticleContent']['title'] = $_POST['title'];
         $_SESSION['addArticleContent']['content'] = $_POST['content'];
         $_SESSION['addArticleContent']['place'] = $_POST['place']; 
         
-        header("Location: ". $where); // buildup new preview
+        header("Location: ". $where); 
     }
 }
 
@@ -55,19 +57,24 @@ if(isset($_POST['postArticle'])) {
     if(empty($title) OR empty($content) OR empty($place)) 
     {
         $notices[] = 'All fields are supposed to be filled in.'; 
+        
+        // build up $article->fillTheCommentsFieldsBySession(); for this ocassion
     } 
       else 
     {
         $state = $addArticle->insertArticle(array(':title' => $title,
-                                         ':content' => $content,
-                                         ':author' => $author,
-                                         ':place' => $place));
+                                                  ':content' => $content,
+                                                  ':author' => $author,
+                                                   ':place' => $place));
         if($state)
         {
             $notices[] = 'Article has been posted';
         } else
         {
             $notices[] = 'Article has not been posted! Some issues have been appeared.';
+            
+            
+        // build up $article->fillTheCommentsFieldsBySession(); for this ocassion
         }
     }
 }
