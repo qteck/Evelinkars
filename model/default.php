@@ -11,19 +11,27 @@ class HomePage
         $this->db = $db;
     }
     
-    function getAllArticles()
+    function getAllArticles($arrays)
     {
-        $sql = 'SELECT *, articles.id AS articles_id FROM articles LEFT JOIN users ON articles.author = users.fb_id ORDER BY articles.id DESC';
+        $sql = 'SELECT *, articles.id AS articles_id FROM articles LEFT JOIN users ON articles.author = users.fb_id ORDER BY articles.id DESC LIMIT :offset, :limit';
         
-        $q = $this->db->query($sql);
+        $q = $this->db->query($sql, $arrays);
                
         return $q;
     }
     
+    function getNumOfArticles() 
+    {
+        $sql = 'SELECT * FROM articles';
+        $stmt = $this->db->numOfRows($sql);
+        
+        return $stmt; 
+    }
+    
     function getComments($arrays)
     {
-        $sql = 'SELECT * FROM comments LEFT JOIN users ON users.fb_id = comments.author WHERE comments.article_id = :id ORDER BY comments.id DESC';
-        $stmt = $this->db->query($sql, $arrays);
+        $sql = 'SELECT * FROM comments WHERE article_id = :id';
+        $stmt = $this->db->numOfRows($sql, $arrays);
         
         return $stmt;
     }

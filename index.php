@@ -32,7 +32,7 @@ and open the template in the editor.
     <style>
         html body{margin: 0;padding: 0; background-color: #F9F9F9;font-family: "Merriweather Sans","HelveticaNeue-Light","Helvetica Neue Light","Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;font-size: 1.125rem;color: #222;}
         #container{width: 720px;margin: 4px auto 40px auto;}
-        #article{margin-top: 20px;padding: 0 40px; background-color: #f7f7f7;border: 1px solid #cbccdd;border-radius: 12px}
+        #article{margin-top: 20px;padding: 0 40px 20px 40px; background-color: #f7f7f7;border: 1px solid #cbccdd;border-radius: 12px}
         span{font-size: 0.8rem;}
         h1{font-size: 2.125rem;}
         
