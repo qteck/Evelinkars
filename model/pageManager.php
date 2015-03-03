@@ -6,29 +6,34 @@ class PageManager
     public $page;
     public $files;
     
-    function __construct() 
+    function __construct($page) 
     {
-        $this->page = isset($_GET['page'])? 
-                                (filter_input(INPUT_GET, 'page', FILTER_SANITIZE_FULL_SPECIAL_CHARS)):null;
+        $this->page = $page;
     }
     
-    function checkDirectories($dir)
+    function checkDirectories($dir, $mode = null)
     {
         if(is_dir($dir))
         {
-            foreach (glob($dir . '*') as $value) {
+            foreach (glob($dir . '*', GLOB_ONLYDIR) as $value) {
                 $e = array_reverse(explode('/', $value));
                                 
                 $this->files[] = $e[0];
             }
         }  
-                    
+
         if($this->files && in_array($this->page, $this->files)) 
         {               
-            $path = $dir . $this->page;
+            $pageFoo = (($mode == 1)? $this->page . '/c_Init':$this->page);
+            
+            $path = $dir . $pageFoo . '.php';
                         
-        } else {
-            $path = $dir . "default.php";
+        } 
+          else 
+        {
+            $homepage = (($mode == 1)? 'default/c_Init': 'default');
+            
+            $path = $dir . $homepage . '.php';
         }
         
         return $path;

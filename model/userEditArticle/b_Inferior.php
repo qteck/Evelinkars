@@ -1,43 +1,6 @@
 <?php
 
-namespace Model;
-
-class EditArticle
-{
-    public $db; 
-    
-    public function __construct($db) 
-    {
-        $this->db = $db;
-    }
-    
-    public function getArticleById($arrays)
-    {
-        $sql = 'SELECT * FROM articles WHERE id = :id AND author = :author';
-        $stmt = $this->db->queryFetch($sql, $arrays);
-        
-        return $stmt;     
-    }
-    
-    public function updateArticle($arrays)
-    {
-        $sql = 'UPDATE articles SET title = :title, content = :content, place = :place, added = NOW() WHERE id = :id AND author = :author';
-        $state = $this->db->boolQuery($sql, $arrays);
-        
-        return $state;
-    }
-    
-    public function previewArticle($where)
-    {
-        $_SESSION['editArticleContent']['title'] = $_POST['title'];
-        $_SESSION['editArticleContent']['content'] = $_POST['content'];
-        $_SESSION['editArticleContent']['place'] = $_POST['place']; 
-        
-        header("Location: ". $where);
-    }
-}
-
-$editArticle = new EditArticle($db);
+$editArticle = new \Model\EditArticle($db);
 
 if(isset($_GET['edit']) AND is_numeric($_GET['id']))
 {
@@ -57,7 +20,7 @@ if(isset($_GET['edit']) AND is_numeric($_GET['id']))
 
 if(isset($_POST['previewArticle']))
 {
-    $editArticle->previewArticle('index.php?page=userEditPreviewArticle.php');
+    $editArticle->previewArticle('index.php?page=userEditPreviewArticle');
 }
 
 if(isset($_POST['postArticle']))
@@ -86,9 +49,4 @@ if(isset($_POST['postArticle']))
         }
     }
 }
-
-/*
- * vytvořit funkci jenom pro edit kde se budou nahrazovat jenom obsahy session. na preview. 
- * merge it with usertAddArticle. insert on duplicate key
- * ----http://dev.mysql.com/doc/refman/5.0/en/insert-on-duplicate.html
- */
+        

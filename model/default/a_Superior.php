@@ -2,7 +2,7 @@
 
 namespace Model;
 
-class HomePage
+class HomePage extends General
 {
     public $db;
    
@@ -35,14 +35,4 @@ class HomePage
         
         return $stmt;
     }
-}
-
-$homepage = new HomePage($db);
-
-// create some global depo
-function makeNiceTitleInUrl($title)
-{
-    $url = str_replace(array(' '), array('-'), mb_strtolower($title));
-            
-    return urlencode($url);
 }

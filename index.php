@@ -2,6 +2,7 @@
 
 require_once __DIR__ . '/vendor/autoload.php';
 require_once __DIR__ . '/control/default.php';
+require_once __DIR__ . '/model/generalClass.php';
 require_once __DIR__ . '/model/pageManager.php';
 
 use Tracy\Debugger;
@@ -11,9 +12,11 @@ session_start();
 Debugger::enable(Debugger::DEVELOPMENT);
 
 $db    = new DB;
-$pages = new Model\PageManager();
 
-include $pages->checkDirectories('model/');
+$page = isset($_GET['page'])? (filter_input(INPUT_GET, 'page', FILTER_SANITIZE_FULL_SPECIAL_CHARS)):null;
+$pages = new Model\PageManager($page);
+
+include $pages->checkDirectories('model/',1);
 
 ?>
 <!DOCTYPE html>
@@ -77,14 +80,14 @@ and open the template in the editor.
               WILD EVELINKA 
             </a> ~
                     <?php if (!isset($_SESSION['fb']['token'])) { ?>
-                        <a href="index.php?page=login.php">
+                        <a href="index.php?page=login">
                             Facebook login
                         </a>
                     <?php } else { ?>
                         You're logged in as 
-                        <a href="index.php?page=userProfil.php"><?php echo $_SESSION['fb']['name']; ?></a> * 
-                        <a href="index.php?page=userAddArticle.php">Add article</a> *
-                        <a href="index.php?page=login.php&logoff=1">Log off</a>
+                        <a href="index.php?page=userProfil"><?php echo $_SESSION['fb']['name']; ?></a> * 
+                        <a href="index.php?page=userAddArticle">Add article</a> *
+                        <a href="index.php?page=login&logoff=1">Log off</a>
                     <?php }?>
             </div>
             

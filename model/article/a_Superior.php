@@ -1,7 +1,7 @@
 <?php
 namespace Model;
 
-class Article
+class Article extends General
 {
     public $db;
     

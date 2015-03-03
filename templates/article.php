@@ -20,7 +20,7 @@
     <div style="text-align: right;">
         <span>
             <?php if (!isset($_SESSION['fb']['token'])) { ?>
-                <a href="index.php?page=login.php" id="comment1">
+                <a href="index.php?page=login" id="comment1">
                     Sign in and write a comment!
                 </a>
             <?php } else { ?>
@@ -33,7 +33,7 @@
 </div>
 
 <?php if (isset($_SESSION['fb']['token'])) { ?>            
-    <form id="comment_form1" action="index.php?page=article.php&id=<?php echo $id; ?>&name=<?php echo \Model\makeNiceTitleInUrl($content['title']); ?>#comments-bookmark" method="post" style="padding: 20px">
+    <form id="comment_form1" action="index.php?page=article&id=<?php echo $id; ?>&name=<?php echo $article->makeNiceTitleInUrl($content['title']); ?>#comments-bookmark" method="post" style="padding: 20px">
         <img src="<?php echo $_SESSION['fb']['url']; ?>" style="float: right;width: 100px;height: 100px;" alt="logo">
         <span>Hello <?php echo ($_SESSION['fb']['gender'] == 'female'?'Miss':'Mr.') ?> <?php echo $_SESSION['fb']['name']; ?>, 
         don't be shy, share your impressions!</span><br>
@@ -87,7 +87,7 @@
 <div style="text-align: right;margin: 8px 0 20px 0;">       
     <?php if(($numOfCommentsPages > 1) AND ($currentPageOfComments > 0)) { ?>
         <div style="float:left;text-align: left;font-size: 0.8rem;">
-            <a href="/index.php?page=article.php&id=<?php echo $id; ?>&title=<?php echo $content['title']; ?>&comments-page=<?php echo $currentPageOfComments-1; ?>#comments-bookmark">
+            <a href="/index.php?page=article&id=<?php echo $id; ?>&title=<?php echo $content['title']; ?>&comments-page=<?php echo $currentPageOfComments-1; ?>#comments-bookmark">
                 newer comments
             </a>
         </div>
@@ -96,7 +96,7 @@
     <?php if($numOfCommentsPages > $currentPageOfComments+1) { ?>
             
         <div style="font-size: 0.8rem;">
-            <a href="/index.php?page=article.php&id=<?php echo $id; ?>&title=<?php echo $content['title']; ?>&comments-page=<?php echo $currentPageOfComments+1; ?>#comments-bookmark">
+            <a href="/index.php?page=article&id=<?php echo $id; ?>&title=<?php echo $content['title']; ?>&comments-page=<?php echo $currentPageOfComments+1; ?>#comments-bookmark">
                 older comments
             </a>
         </div>

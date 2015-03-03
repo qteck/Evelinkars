@@ -17,7 +17,7 @@ $articles = $homepage->getAllArticles(array(':offset' => ($currentPageOfArticles
 
 <?php foreach($articles as $content) { ?>
     <h2>
-        <a href="index.php?page=article.php&id=<?php echo $content['articles_id']; ?>&title=<?php echo \Model\makeNiceTitleInUrl($content['title']); ?>">
+        <a href="index.php?page=article&id=<?php echo $content['articles_id']; ?>&title=<?php echo $homepage->makeNiceTitleInUrl($content['title']); ?>">
             <?php echo $content['title']; ?>
         </a>
     </h2>
@@ -32,7 +32,7 @@ $articles = $homepage->getAllArticles(array(':offset' => ($currentPageOfArticles
         </div>
         <div style="text-align: right;">
             <span>
-                <a href="index.php?page=article.php&id=<?php echo $content['articles_id']; ?>&title=<?php echo \Model\makeNiceTitleInUrl($content['title']); ?>#comments-bookmark">Comments</a>
+                <a href="index.php?page=article&id=<?php echo $content['articles_id']; ?>&title=<?php echo $homepage->makeNiceTitleInUrl($content['title']); ?>#comments-bookmark">Comments</a>
                 (<?php 
                     echo $homepage->getComments(array(':id' => $content['articles_id'])); 
                 ?>)

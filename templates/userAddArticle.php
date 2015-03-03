@@ -12,7 +12,7 @@
     ?>
 </p>
 
-<form action="index.php?page=userAddArticle.php" method="post">
+<form action="index.php?page=userAddArticle" method="post">
     Title: <input type="text" name="title" value="<?php echo !isset($_SESSION['addArticleContent']['title'])?'': $_SESSION['addArticleContent']['title']; ?>" style="width: 100%;"><br><br>
     Article Content: 
     <textarea name="content" style="width: 100%;height: 300px;"><?php echo !isset($_SESSION['addArticleContent']['content'])?'': $_SESSION['addArticleContent']['content']; ?></textarea><br><br>

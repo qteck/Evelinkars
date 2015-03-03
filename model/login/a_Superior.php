@@ -26,7 +26,7 @@ class FacebookLogIn
         FacebookSession::setDefaultApplication($this->id, 
                                                $this->secret);
         
-        $this->helper = new Facebook\FacebookRedirectLoginHelper('http://' . $server_filter . '/index.php?page=login.php');
+        $this->helper = new Facebook\FacebookRedirectLoginHelper('http://' . $server_filter . '/index.php?page=login');
         
         $get = (isset($_GET['logoff'])?1:'');
         
@@ -131,14 +131,4 @@ class FacebookLogIn
              
         return $link;          
     }
-}
-
-
-$facebookLogIn = new FacebookLogIn($db);
-
-
-if(isset($_SESSION['fb']['token']))
-{  
-    header('Location: /index.php');
-    exit;
 }

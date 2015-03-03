@@ -12,7 +12,7 @@
     ?>
 </p>
 
-<form action="index.php?page=userEditArticle.php" method="post">
+<form action="index.php?page=userEditArticle" method="post">
     Title: <input type="text" name="title" value="<?php echo $_SESSION['editArticleContent']['title']; ?>" style="width: 100%;"><br><br>
     Article Content: 
     <textarea name="content" style="width: 100%;height: 300px;"><?php echo $_SESSION['editArticleContent']['content']; ?></textarea><br>
