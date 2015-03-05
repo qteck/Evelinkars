@@ -1,3 +1,3 @@
 <?php
     
-    $homepage = new \Model\HomePage($db);
+    $homepage = new \Model\HomePage($db, new \Texy);

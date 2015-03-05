@@ -1,14 +1,14 @@
 <?php
 namespace Model;
 
-$article = new Article($db);
+$article = new Article($db, new \Texy);
 
 $id = (!is_numeric($_GET['id'])?'1':$_GET['id']);
 
 if(isset($_POST['comment']))
 {
     $comment['comment_content'] = $_POST['comment_content'];
-    $comment['place']  = $_POST['place'];
+    $comment['place']  = htmlspecialchars($_POST['place']);
     
     if(empty($comment['comment_content'] ) OR empty($comment['place']))
     {
@@ -60,13 +60,3 @@ $currentPageOfComments = ($currentPageOfComments >= $numOfCommentsPages)? $numOf
 $comments = $article->getComments(array(':id' => $content['articles_id'],
                                         ':offset' => ($currentPageOfComments*$limitOfComments),
                                         ':limit' => $limitOfComments)); 
-
-
-
-// create some global depo
-function makeNiceTitleInUrl($title)
-{
-    $url = str_replace(array(' '), array('-'), mb_strtolower($title));
-            
-    return urlencode($url);
-}

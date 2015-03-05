@@ -25,10 +25,10 @@ if(isset($_POST['previewArticle']))
 
 if(isset($_POST['postArticle']))
 {
-    $title = trim($_POST['title']);
+    $title = htmlspecialchars(trim($_POST['title']));
     $content = trim($_POST['content']);
     $author = $_SESSION['fb']['id'];
-    $place = trim($_POST['place']);
+    $place = htmlspecialchars(trim($_POST['place']));
     $id = $_SESSION['editArticleContent']['id'];
     
     if(empty($title) OR empty($content) OR empty($place)) {
@@ -42,7 +42,10 @@ if(isset($_POST['postArticle']))
                                                    ':author' => $author));
         if($state)
         {
-            $notices[] = 'Article has been updated!';
+            $notices[] = 'Article has been updated!'; 
+            $_SESSION['editArticleContent'] = $editArticle->getArticleById(array(':id' => $_GET['id'],
+                                                         ':author' => $_SESSION['fb']['id']));
+            
         } else
         {
             $notices[] = 'Article has not been updated! Some issues have been appeared.';

@@ -17,10 +17,10 @@ if(isset($_POST['previewArticle']))
 
 if(isset($_POST['postArticle'])) {
     
-    $title = trim($_POST['title']);
+    $title = htmlspecialchars(trim($_POST['title']));
     $content = trim($_POST['content']);
     $author = $_SESSION['fb']['id'];
-    $place = trim($_POST['place']);
+    $place = htmlspecialchars(trim($_POST['place']));
     
     if(empty($title) OR empty($content) OR empty($place)) 
     {

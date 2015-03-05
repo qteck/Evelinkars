@@ -5,10 +5,29 @@ namespace Model;
 class HomePage extends General
 {
     public $db;
+    public $texy;
    
-    function __construct($db) 
+    function __construct($db, $texy) 
     {
         $this->db = $db;
+        $this->texy = $texy;
+        
+        $this->texy->encoding = 'UTF-8';
+        $this->texy->typographyModule->locale = 'en';
+        $this->texy->mergeLines = FALSE;
+        $this->texy->allowedTags = \Texy::NONE;
+    }
+    
+    function processTexy($string)
+    {
+        return $this->texy->process($string);
+    }
+    
+    function processArticle($string)
+    {
+        $this->texy->headingModule->top = 2;
+        
+        return $this->processTexy($string);
     }
     
     function getAllArticles($arrays)

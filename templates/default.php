@@ -22,7 +22,7 @@ $articles = $homepage->getAllArticles(array(':offset' => ($currentPageOfArticles
         </a>
     </h2>
 
-    <?php echo $content['content']; ?>
+    <?php echo $homepage->processArticle($content['content']); ?>
 
     <div style="border-bottom: 1px solid grey;padding-bottom: 8px;">    
         <div style="float:left;">

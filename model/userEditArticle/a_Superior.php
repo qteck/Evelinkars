@@ -31,7 +31,7 @@ class EditArticle
     {
         $_SESSION['editArticleContent']['title'] = $_POST['title'];
         $_SESSION['editArticleContent']['content'] = $_POST['content'];
-        $_SESSION['editArticleContent']['place'] = $_POST['place']; 
+        $_SESSION['editArticleContent']['place'] = $_POST['place'];
         
         header("Location: ". $where);
     }

@@ -3,7 +3,7 @@
 <p>
     <?php 
         foreach ($notices as $notice) {
-            echo $notice;
+            echo htmlspecialchars($notice);
         } 
     ?>
 </p>

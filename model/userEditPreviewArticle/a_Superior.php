@@ -1,7 +1,30 @@
 <?php
 namespace Model;
 
-class PreviewArticle
+class UserEditPreviewArticle
 {
+    public $texy;
     
+    function __construct($texy) {
+
+        $this->texy = $texy;
+        
+        $this->texy->encoding = 'UTF-8';
+        $this->texy->typographyModule->locale = 'en';
+        $this->texy->mergeLines = FALSE;
+        $this->texy->allowedTags = \Texy::NONE;
+
+    }
+    
+    function processTexy($string)
+    {
+        return $this->texy->process($string);
+    }
+    
+    function processArticle($string)
+    {
+        $this->texy->headingModule->top = 2;
+        
+        return $this->processTexy($string);
+    }
 }

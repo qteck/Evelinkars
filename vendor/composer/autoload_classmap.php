@@ -6,7 +6,7 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'Control\\DB' => $baseDir . '/control/default.php',
+    'DB' => $baseDir . '/control/default.php',
     'Tracy\\Bar' => $vendorDir . '/tracy/tracy/src/Tracy/Bar.php',
     'Tracy\\BlueScreen' => $vendorDir . '/tracy/tracy/src/Tracy/BlueScreen.php',
     'Tracy\\Bridges\\Nette\\TracyExtension' => $vendorDir . '/tracy/tracy/src/Bridges/Nette/TracyExtension.php',

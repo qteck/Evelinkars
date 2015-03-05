@@ -20,17 +20,18 @@ include $pages->checkDirectories('model/',1);
 
 ?>
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
 <html>
     <head>
-        <title>Wild Evelinka and our love :-*</title>
+        <title>Wild Evelinka and our love :-*
+        <!-- dont forget to generate titles -->
+        </title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script src="vendor/components/jquery/jquery.js"></script>
+        
+        <!-- don't forget 
+            <link href="print.css" rel="stylesheet" type="text/css" media="print"> 
+        -->
     </head>
     <style>
         html body{margin: 0;padding: 0; background-color: #F9F9F9;font-family: "Merriweather Sans","HelveticaNeue-Light","Helvetica Neue Light","Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;font-size: 1.125rem;color: #222;}

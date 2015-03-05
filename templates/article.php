@@ -7,7 +7,7 @@
 <h1>~ <?php echo $content['title']; ?></h1>
 
 
-<?php echo $content['content']; ?>
+<?php echo $article->processArticle($content['content']); ?>
 
 <div style="border-bottom: 1px solid grey;padding-bottom: 8px;">    
     <div style="float:left;">
@@ -73,7 +73,7 @@
     <div style="min-height: 107px;padding-bottom: 10px;margin-bottom: 10px;border-bottom: 1px solid #c0cae2">
         <p>
             <img src="<?php echo $comment['fb_url_photo']; ?>" style="float: left;width: 100px;height: 107px;margin-right: 10px;" alt="logo">
-            <?php echo $comment['commentsId']. $comment['content']; ?>
+            <?php echo $article->processComment($comment['content']); ?>
         </p>
         <span>
             (<?php echo $comment['place']; ?>, 

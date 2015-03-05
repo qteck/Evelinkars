@@ -1,7 +1,7 @@
-<p>You're located in article preview section. for more editing go back to <a href="index.php?page=userEditArticle&id=<?php echo $_SESSION['articleContent']['id']; ?>&edit=1">editting forms</a></p>
+<p>You're located in article preview section. for more editing go back to <a href="index.php?page=userEditArticle&id=<?php echo $_SESSION['editArticleContent']['id']; ?>&edit=1">editting forms</a></p>
 <h1><?php echo $_SESSION['editArticleContent']['title']; ?></h1>
 
-    <?php echo $_SESSION['editArticleContent']['content']; ?>
+    <?php echo $editPreviewArticle->processArticle($_SESSION['editArticleContent']['content']); ?>
 
     <div style="border-bottom: 1px solid grey;padding-bottom: 8px;">    
         <div style="float:left;">

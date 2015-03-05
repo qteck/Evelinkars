@@ -4,9 +4,42 @@ namespace Model;
 class Article extends General
 {
     public $db;
+    public $texy;
     
-    function __construct($db) {
+    function __construct($db, $texy) {
         $this->db = $db;
+        $this->texy = $texy;
+        
+        $this->texy->encoding = 'UTF-8';
+        $this->texy->typographyModule->locale = 'en';
+        $this->texy->mergeLines = FALSE;
+        $this->texy->allowedTags = \Texy::NONE;
+
+    }
+    
+    function processTexy($string)
+    {
+        return $this->texy->process($string);
+    }
+    
+    function processArticle($string)
+    {
+        $this->texy->headingModule->top = 2;
+        
+        return $this->processTexy($string);
+    }
+    
+    function processComment($string)
+    {
+        $this->texy->allowed['image'] = FALSE;
+        $this->texy->allowed['image/definition'] = FALSE;
+        $this->texy->allowed['html/comment'] = FALSE;
+        $this->texy->allowed['html/tag'] = FALSE;
+        $this->texy->allowed['figure'] = FALSE;
+        $this->texy->allowed['heading/underlined'] = FALSE;
+        $this->texy->allowed['heading/surrounded'] = FALSE;
+        
+        return $this->texy->process($string);
     }
     
     function getArticle($arrays)
