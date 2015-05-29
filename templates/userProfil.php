@@ -25,4 +25,6 @@
     </li>
     <?php } ?>
 </ul>
-<a href="index.php?page=userAddArticle">add another article</a>
+<span>
+    <a href="index.php?page=userAddArticle">add another article</a>
+</span>

@@ -47,6 +47,8 @@ try
     exit;
 }
 
+$title = $article->contentOfTitleTag($content['title']);
+
 $limitOfComments = 3;
         
 $numOfComments = $article->getNumOfComments(array(':id' => $content['articles_id']));

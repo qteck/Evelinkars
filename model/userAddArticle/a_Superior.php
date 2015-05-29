@@ -5,9 +5,27 @@ class AddArticle
 {
     public $db;
     
+    public $stmt;
+    
     function __construct($db) {
         $this->db = $db;
     }
+    
+    function hashTagSelect($tag)
+    {
+        preg_match_all('{\#([a-zA-Z0-9]+)}', $tag, $matches);
+        
+        return $matches[1];
+    }
+    
+    function hashTagInsert($tags) 
+    {
+        foreach ($tags as $val)
+        {
+            $sql = 'INSERT INTO tags (tag, added) VALUES (:tag, NOW()) ON DUPLICATE KEY UPDATE occurrence = occurrence + 1';
+            $this->db->boolQuery($sql, array(':tag' => $val));
+        }
+    }    
     
     ///check the stmt return
     function insertArticle($arrays)
@@ -15,9 +33,13 @@ class AddArticle
         $sql = 'INSERT INTO articles (title, content, author, place, added) '
                 . 'VALUES (:title, :content, :author, :place, NOW()) ';
         
-        $stmt = $this->db->boolQuery($sql, $arrays);
-        
-        return ($stmt?true:false);
+        $this->stmt = $this->db->boolQuery($sql, $arrays);
+    }
+    
+    
+    function insertSuccess()
+    {
+        return  $this->stmt;
     }
        
     public function previewArticle($where)

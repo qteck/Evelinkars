@@ -5,11 +5,12 @@ class Article extends General
 {
     public $db;
     public $texy;
-    
+    public $tags;
+            
     function __construct($db, $texy) {
         $this->db = $db;
         $this->texy = $texy;
-        
+             
         $this->texy->encoding = 'UTF-8';
         $this->texy->typographyModule->locale = 'en';
         $this->texy->mergeLines = FALSE;
@@ -26,7 +27,7 @@ class Article extends General
     {
         $this->texy->headingModule->top = 2;
         
-        return $this->processTexy($string);
+        return $this->hashTagIntoUrl($this->processTexy($string));
     }
     
     function processComment($string)
@@ -39,7 +40,7 @@ class Article extends General
         $this->texy->allowed['heading/underlined'] = FALSE;
         $this->texy->allowed['heading/surrounded'] = FALSE;
         
-        return $this->texy->process($string);
+        return $this->hashTagIntoUrl($this->texy->process($string));
     }
     
     function getArticle($arrays)
@@ -84,6 +85,5 @@ class Article extends General
     function fillTheCommentsFieldsBySession($fields) 
     {
         $_SESSION['comment'] = $fields;
-    }
-    
+    }    
 }

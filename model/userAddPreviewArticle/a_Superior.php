@@ -1,7 +1,7 @@
 <?php
 namespace Model;
 
-class UserAddPreviewArticle
+class UserAddPreviewArticle extends General
 {
     public $texy;
     
@@ -25,6 +25,6 @@ class UserAddPreviewArticle
     {
         $this->texy->headingModule->top = 2;
         
-        return $this->processTexy($string);
+        return $this->hashTagIntoUrl($this->processTexy($string));
     }
 }

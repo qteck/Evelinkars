@@ -30,13 +30,21 @@ if(isset($_POST['postArticle'])) {
     } 
       else 
     {
-        $state = $addArticle->insertArticle(array(':title' => $title,
+        $addArticle->insertArticle(array(':title' => $title,
                                                   ':content' => $content,
                                                   ':author' => $author,
                                                    ':place' => $place));
-        if($state)
+        
+        //ulozit clanek dostat - last inserted id 
+        //
+        
+        if($addArticle->insertSuccess())
         {
+            $tagsFromContent = $addArticle->hashTagSelect($content);
+            $addArticle->hashTagInsert($tagsFromContent);
+            
             $notices[] = 'Article has been posted';
+            $_SESSION['addArticleContent'] = '';
         } else
         {
             $notices[] = 'Article has not been posted! Some issues have been appeared.';

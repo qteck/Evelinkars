@@ -4,7 +4,9 @@ $editArticle = new \Model\EditArticle($db);
 
 if(isset($_GET['edit']) AND is_numeric($_GET['id']))
 {
-    if($_SESSION['editArticleContent']['id'] != $_GET['id'])
+    $sessionArticleId = isset($_SESSION['editArticleContent']['id'])?$_SESSION['editArticleContent']['id']:null;
+    
+    if($sessionArticleId != $_GET['id'])
     {
         $articleContent = $editArticle->getArticleById(array(':id' => $_GET['id'],
                                                          ':author' => $_SESSION['fb']['id']));
@@ -35,12 +37,12 @@ if(isset($_POST['postArticle']))
         $notices[] = 'All fields are supposed to be filled in.'; 
     } else
     {
-        $state = $editArticle->updateArticle(array(':title' => $title, 
+        $editArticle->updateArticle(array(':title' => $title, 
                                                    ':content' => $content, 
                                                    ':place' => $place, 
                                                    ':id' => $id, 
                                                    ':author' => $author));
-        if($state)
+        if($editArticle->updateSuccess())
         {
             $notices[] = 'Article has been updated!'; 
             $_SESSION['editArticleContent'] = $editArticle->getArticleById(array(':id' => $_GET['id'],

@@ -33,11 +33,11 @@
 </div>
 
 <?php if (isset($_SESSION['fb']['token'])) { ?>            
-    <form id="comment_form1" action="index.php?page=article&id=<?php echo $id; ?>&name=<?php echo $article->makeNiceTitleInUrl($content['title']); ?>#comments-bookmark" method="post" style="padding: 20px">
-        <img src="<?php echo $_SESSION['fb']['url']; ?>" style="float: right;width: 100px;height: 100px;" alt="logo">
+    <form id="comment_form1" action="index.php?page=article&id=<?php echo $id; ?>&name=<?php echo $article->makeNiceTitleInUrl($content['title']); ?>#comments-bookmark" method="post">
+        <img src="<?php echo $_SESSION['fb']['url']; ?>" alt="profile picture">
         <span>Hello <?php echo ($_SESSION['fb']['gender'] == 'female'?'Miss':'Mr.') ?> <?php echo $_SESSION['fb']['name']; ?>, 
         don't be shy, share your impressions!</span><br>
-        <textarea name="comment_content" cols="64" rows="7"><?php echo (isset($_SESSION['comment']['comment_content'])? $_SESSION['comment']['comment_content']:''); ?></textarea></br>
+        <textarea name="comment_content"><?php echo (isset($_SESSION['comment']['comment_content'])? $_SESSION['comment']['comment_content']:''); ?></textarea></br>
         <span>Place of writing:</span> <input type='text' name="place"value="<?php echo (isset($_SESSION['comment']['place'])? $_SESSION['comment']['place']:'The Earth'); ?>"><br>
         <input type="submit" name="comment" value="Post">
     </form>

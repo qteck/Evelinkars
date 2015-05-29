@@ -16,7 +16,7 @@
 
 <div style="text-align: center;">
     <a href="<?php echo $fbLoglink?>">
-        <img src="images/fb_button_login.png" style="width: 360px;height: 150px;" alt="log in with facebook">
+        <img src="images/fb_button_login.png" style="width: 100%;max-width: 340px;height: auto;" alt="log in with facebook">
     </a>
 </div>
 <?php } ?>
