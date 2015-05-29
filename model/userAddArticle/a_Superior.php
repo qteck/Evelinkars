@@ -20,10 +20,17 @@ class AddArticle
     
     function hashTagInsert($tags) 
     {
+        /// commit this as a transaction
+        
+        $lastInsertId = $this->db->lastId();
+            
         foreach ($tags as $val)
         {
             $sql = 'INSERT INTO tags (tag, added) VALUES (:tag, NOW()) ON DUPLICATE KEY UPDATE occurrence = occurrence + 1';
             $this->db->boolQuery($sql, array(':tag' => $val));
+            
+            $sql2 = 'INSERT INTO tags_refs (article_id, tag_id) VALUES (:lastInsertId, LAST_INSERT_ID())';
+            $this->db->boolQuery($sql2, array(':lastInsertId' => $lastInsertId));
         }
     }    
     
