@@ -43,7 +43,7 @@ try
 } 
   catch (\Exception $e)
 {
-    header('Location: /index.php?page=puppySlap&info='. $e->getMessage());
+    header('Location: /index.php?page=puppySlap&info='. urlencode($e->getMessage()));
     exit;
 }
 

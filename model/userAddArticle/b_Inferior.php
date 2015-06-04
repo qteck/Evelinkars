@@ -30,27 +30,51 @@ if(isset($_POST['postArticle'])) {
     } 
       else 
     {
-        $addArticle->insertArticle(array(':title' => $title,
-                                                  ':content' => $content,
-                                                  ':author' => $author,
-                                                   ':place' => $place));
-        
-        //ulozit clanek dostat - last inserted id 
-        //
-        
-        if($addArticle->insertSuccess())
+        function makeItHashTag ($tag)
         {
+            $x = array();
+    
+            foreach ($tag as $key1 => $val1)
+            {
+                $e = explode(' ', $val1);
+
+                $x[$key1] = implode('', array_map('ucfirst', explode(' ', $val1)));
+
+            }
+
+            return $x;
+    
+        }
+        
+        try 
+        {
+        
+            $db->beginTransaction();
+        
+            $addArticle->insertArticle(array(':title' => $title,
+                                             ':content' => $content,
+                                             ':author' => $author,
+                                             ':place' => $place));
+        
+            $title = $title;
+            $author = $_SESSION['fb']['name'];
+    
             $tagsFromContent = $addArticle->hashTagSelect($content);
-            $addArticle->hashTagInsert($tagsFromContent);
+            $addArticle->hashTagInsert(array_merge($tagsFromContent, makeItHashTag(array($title, $author))));
+            
+            $db->commitTransaction();
             
             $notices[] = 'Article has been posted';
             $_SESSION['addArticleContent'] = '';
-        } else
-        {
-            $notices[] = 'Article has not been posted! Some issues have been appeared.';
-            
+  
             
         // build up $article->fillTheCommentsFieldsBySession(); for this ocassion
+ 
+        } 
+          catch (Exception $ex) 
+        {
+            $db->rollbackTransaction();
+            $notices[] = 'Article has not been posted! Some issues have been appeared.';
         }
     }
 }

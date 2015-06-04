@@ -37,21 +37,48 @@ if(isset($_POST['postArticle']))
         $notices[] = 'All fields are supposed to be filled in.'; 
     } else
     {
-        $editArticle->updateArticle(array(':title' => $title, 
-                                                   ':content' => $content, 
-                                                   ':place' => $place, 
-                                                   ':id' => $id, 
-                                                   ':author' => $author));
-        if($editArticle->updateSuccess())
+        try 
         {
+            function makeItHashTag ($tag)
+            {
+                $x = array();
+    
+                foreach ($tag as $key1 => $val1)
+                {
+                    $e = explode(' ', $val1);
+
+                    $x[$key1] = implode('', array_map('ucfirst', explode(' ', $val1)));
+
+                }
+
+                return $x;
+    
+            }
+        
+            $db->beginTransaction();
+        
+            $editArticle->updateArticle(array(':title' => $title, 
+                                              ':content' => $content, 
+                                              ':place' => $place, 
+                                              ':id' => $id, 
+                                              ':author' => $author));
+            
+            $tagsFromContent = $editArticle->hashTagSelect($content);
+            
+         
+            $editArticle->hashTagInsert(array_merge($tagsFromContent, makeItHashTag(array($title, $_SESSION['fb']['name']))), $id);
+
+            $db->commitTransaction();
+         
             $notices[] = 'Article has been updated!'; 
             $_SESSION['editArticleContent'] = $editArticle->getArticleById(array(':id' => $_GET['id'],
-                                                         ':author' => $_SESSION['fb']['id']));
+                                                                                 ':author' => $_SESSION['fb']['id']));
             
-        } else
-        {
+        } catch (Exception $ex) {
+            $db->rollbackTransaction();
             $notices[] = 'Article has not been updated! Some issues have been appeared.';
         }
+        
     }
 }
         

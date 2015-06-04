@@ -22,7 +22,12 @@ class Tags extends General
     {
         $sql = "SELECT * FROM tags INNER JOIN tags_refs refs ON refs.tag_id = tags.id INNER JOIN articles ON refs.article_id = articles.id WHERE tags.tag = :tagSelector";
         
-        $this->stmt = $this->db->query($sql, $arrays);        
+        $this->stmt = $this->db->query($sql, $arrays);
+        
+        if(!$this->stmt)
+        {
+            throw new \Exception('This tag does not exist.');
+        }
     }
     
     function result()

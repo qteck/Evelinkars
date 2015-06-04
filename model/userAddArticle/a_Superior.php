@@ -19,18 +19,28 @@ class AddArticle
     }
     
     function hashTagInsert($tags) 
-    {
-        /// commit this as a transaction
-        
+    {        
         $lastInsertId = $this->db->lastId();
             
         foreach ($tags as $val)
         {
             $sql = 'INSERT INTO tags (tag, added) VALUES (:tag, NOW()) ON DUPLICATE KEY UPDATE occurrence = occurrence + 1';
-            $this->db->boolQuery($sql, array(':tag' => $val));
+            $stmt = $this->db->boolQuery($sql, array(':tag' => $val));
             
-            $sql2 = 'INSERT INTO tags_refs (article_id, tag_id) VALUES (:lastInsertId, LAST_INSERT_ID())';
-            $this->db->boolQuery($sql2, array(':lastInsertId' => $lastInsertId));
+            if(!$stmt)
+            {
+               $sql3 = 'SELECT id FROM tags WHERE tag = :tag';
+               
+               $existingTagId = $this->db->queryFetch($sql3, array(':tag' => $val));
+            }
+            
+            $tagId = (isset($existingTagId)? $existingTagId : $this->db->lastId());
+            
+            $sql2 = 'INSERT INTO tags_refs (article_id, tag_id) VALUES (:lastInsertId, :tagId)';
+            $this->db->boolQuery($sql2, array(':lastInsertId' => $lastInsertId,
+                                              ':tagId' => $tagId));
+            
+            unset($existingTagId);
         }
     }    
     
@@ -59,4 +69,5 @@ class AddArticle
         
         header("Location: ". $where); 
     }
+    
 }
